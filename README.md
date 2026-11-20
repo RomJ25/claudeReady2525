@@ -3,6 +3,18 @@
 A password-protected archive. It is a 7-Zip archive with AES-256 encryption, and the file names are
 encrypted too. Nothing inside can be read or listed without the password.
 
+## Download
+
+`git clone https://github.com/RomJ25/claudeReady2525.git` fetches everything (~906 MB). If the clone stops
+with `early EOF` or a timeout, fetch the files one at a time instead. In PowerShell, using the `curl.exe`
+that ships with Windows 10/11 (each retry resumes where the last one stopped):
+
+```
+$b='https://raw.githubusercontent.com/RomJ25/claudeReady2525/main'
+$f=@('7zr.exe','SHA256SUMS.txt') + (1..10 | % { 'claudeReady2525.7z.{0:D3}' -f $_ })
+foreach($n in $f){ for($i=0;$i -lt 20;$i++){ curl.exe -sSfL -C - -o $n "$b/$n"; if($LASTEXITCODE -eq 0){break} } }
+```
+
 ## Extract (Windows)
 
 Put every `claudeReady2525.7z.0NN` volume and `7zr.exe` in one folder, then run:
